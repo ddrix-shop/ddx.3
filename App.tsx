@@ -109,9 +109,13 @@ const FEATURED_SERVICES_DATA = [
 // --- Navbar Component ---
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-
+useEffect(() => {
+  if (isOpen) document.body.style.overflow = 'hidden';
+  else document.body.style.overflow = '';
+  return () => { document.body.style.overflow = ''; };
+}, [isOpen]);
   return (
-    <nav className="w-full fixed top-6 z-50 px-4">
+    <nav className="w-full md:fixed md:top-6 md:z-50 px-4">
       <div className="flex max-w-7xl mr-auto ml-auto items-center justify-between">
         {/* Logo */}
         <a href="#" className="text-lg tracking-tight font-semibold text-white flex items-center gap-2 drop-shadow-md">
@@ -987,23 +991,27 @@ const App = () => {
   return (
     <div className="bg-black min-h-screen text-zinc-100 font-sans selection:bg-orange-500/30">
       <Navbar />
-      <main>
-        <Hero onSelectProduct={handleSelectProduct} />
-        <div id="accounts">
-          <PremiumAccounts />
-        </div>
-        <div id="diamonds">
-          <DiamondTopUp selectedProduct={selectedProduct} />
-        </div>
-        <FeaturedAccounts onSelectProduct={handleSelectProduct} />
-        <HowItWorks />
-        <AboutSection />
-        <div id="faq">
-           <FAQ />
-        </div>
-        <Testimonials />
-        <OrderNow />
-      </main>
+   
+       <main className="pt-28 md:pt-0">
+  <Hero onSelectProduct={handleSelectProduct} />
+  <div id="accounts">
+    <PremiumAccounts />
+  </div>
+
+  <DiamondTopUp selectedProduct={selectedProduct} />
+
+  <FeaturedAccounts onSelectProduct={handleSelectProduct} />
+  <HowItWorks />
+  <AboutSection />
+
+  <div id="faq">
+    <FAQ />
+  </div>
+
+  <Testimonials />
+  <OrderNow />
+</main>
+    
       <Footer />
     </div>
   );
